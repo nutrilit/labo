@@ -57,3 +57,4 @@ void PrimitiveRenderer::RysLinie(SDL_Renderer* renderer, int x0, int y0, int x1,
         SDL_RenderFillRect(renderer, &rect);
     
 }
+//siema texst
