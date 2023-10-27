@@ -32,7 +32,7 @@ void Engine::Run()
 
     //obiekty Point2D ale do LineSegment
     Point2D point1(5, 5);
-    Point2D point2(200, 200);
+    Point2D point2(10, 10);
 
     // Tworzenie obiektu LineSegment
     LineSegment line(point1, point2);
@@ -61,7 +61,7 @@ void Engine::Run()
         point.zmien_punkt(750, 20);
 
         //test czy dzia³aj¹ ró¿ne k¹ty do zad3 lab2
-        pr1.RysLinie(renderer, 300, 103, p1.x, p1.y);
+        pr1.RysLinie(renderer, 50, 1, 50, 40);
 
         //zad5 lab2 - lineSegment
         //rysowanie odcinka przy pomocy Point2D
@@ -81,8 +81,8 @@ void Engine::Run()
 
         /*modyfikacja odcinka do lineSegment*/
         // Modyfikacja wspó³rzêdnych poszczególnych koñców odcinka
-        start.zmien_punkt(600, 100);
-        end.zmien_punkt(200, 400);
+        start.zmien_punkt(1, 50);
+        end.zmien_punkt(799, 50);
         // Ustawienie zmodyfikowanych punktów w odcinku
         line.SetStartPoint(start);
         line.SetEndPoint(end);
