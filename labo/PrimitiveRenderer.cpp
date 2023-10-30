@@ -57,3 +57,11 @@ void PrimitiveRenderer::RysLinie(SDL_Renderer* renderer, int x0, int y0, int x1,
         SDL_RenderFillRect(renderer, &rect);
     
 }
+
+void PrimitiveRenderer::Otwarta(SDL_Renderer* renderer, Point2D nazwa[]) {
+    for (int i = 0; i < sizeof(nazwa)/(sizeof(nazwa[0])); i++) {
+        if (i + 1 <= sizeof(nazwa) / (sizeof(nazwa[0])))
+            RysLinie(renderer, nazwa[i].x, nazwa[i].y, nazwa[i + 1].x, nazwa[i + 1].y);
+    }
+
+}

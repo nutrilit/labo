@@ -44,7 +44,7 @@ void Engine::Run()
     int frameTime;
     float old_time = SDL_GetTicks();
     bool isRunning = true;
-
+    Point2D nazwa[3] = { Point2D(10,15),Point2D(20,20) ,Point2D(200,30) };
     while (isRunning)
     {
         // klatki
@@ -56,7 +56,7 @@ void Engine::Run()
         pr1.Draw(renderer, p1.rect);
         /* koniec gracz*/
         // rysowanie piksela w lewym gornym rogu
-        point.rys_piksel(renderer);
+        //point.rys_piksel(renderer);
         // piksel narysowany wyzej zostaje przeniesiony na prawy gorny rog
         point.zmien_punkt(750, 20);
 
@@ -90,6 +90,8 @@ void Engine::Run()
         line.Draw(renderer, true);
         /*koniec zad5 lab2 - lineSegment*/
 
+        pr1.Otwarta(renderer, nazwa);
+      
         frameTime = SDL_GetTicks() - frameStart;
         if (frameDelay > frameTime)
         {
