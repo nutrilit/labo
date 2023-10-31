@@ -86,3 +86,22 @@ void PrimitiveRenderer::DrawPolyline(SDL_Renderer* renderer, const std::vector<P
     }
     
 }
+ 
+// Rozszerzona metoda do rysowania linii ³amanej na podstawie odcinków
+void PrimitiveRenderer::DrawPolyline2(SDL_Renderer* renderer, const std::vector<LineSegment>& segments, bool closed)
+{
+    if (segments.empty()) {
+        return;
+    }
+
+    for (size_t i = 0; i < segments.size(); ++i) {
+        const LineSegment& segment = segments[i];
+        RysLinie(renderer, segment.GetStartPoint().GetX(), segment.GetStartPoint().GetY(), segment.GetEndPoint().GetX(), segment.GetEndPoint().GetY());
+    }
+
+    if (closed && segments.size() >= 2) {
+        const LineSegment& firstSegment = segments.front();
+        const LineSegment& lastSegment = segments.back();
+        RysLinie(renderer, lastSegment.GetEndPoint().GetX(), lastSegment.GetEndPoint().GetY(), firstSegment.GetStartPoint().GetX(), firstSegment.GetStartPoint().GetY());
+    }
+}

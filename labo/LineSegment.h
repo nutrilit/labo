@@ -1,6 +1,6 @@
 #pragma once
 #include "Point2D.h"
-#include "PrimitiveRenderer.h"
+//#include "PrimitiveRenderer.h"
 #include <SDL.h>
 
 class LineSegment

@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Point2D.h"
 #include <vector>
+#include "LineSegment.h"
 class PrimitiveRenderer
 {
 public:
@@ -14,6 +15,7 @@ public:
     //Point2D* dynamicznaKlasa = new Point2D(10, 20);
     void Otwarta(SDL_Renderer* renderer, Point2D nazwa[]);
     void DrawPolyline(SDL_Renderer* renderer, const std::vector<Point2D>& points, bool closed = false);
+    void DrawPolyline2(SDL_Renderer* renderer, const std::vector<LineSegment>& segments, bool closed);
 };
 
 #endif

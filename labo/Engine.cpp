@@ -52,9 +52,11 @@ void Engine::Run()
     polylinePoints.push_back(Point2D(300, 100));
     polylinePoints.push_back(Point2D(400, 200));
 
-    polylineSegments.push_back(LineSegment(Point2D(100, 100), Point2D(200, 200)));
-    polylineSegments.push_back(LineSegment(Point2D(200, 200), Point2D(300, 100)));
-    polylineSegments.push_back(LineSegment(Point2D(300, 100), Point2D(400, 200)));
+    polylineSegments.push_back(LineSegment(Point2D(150, 100), Point2D(250, 200)));
+    polylineSegments.push_back(LineSegment(Point2D(250, 200), Point2D(350, 100)));
+    polylineSegments.push_back(LineSegment(Point2D(350, 100), Point2D(450, 200)));
+
+
     
     while (isRunning)
     {
@@ -110,6 +112,12 @@ void Engine::Run()
 
         // linia ³amana zamkniêta na podstawie punktów
         pr1.DrawPolyline(renderer, polylinePoints, true);
+
+        // linia ³amana otwarta na podstawie linii
+        //pr1.DrawPolyline2(renderer, polylineSegments, false);
+
+        // linia ³amana zamkniêta na podstawie linii
+        pr1.DrawPolyline2(renderer, polylineSegments, true);
 
         frameTime = SDL_GetTicks() - frameStart;
         if (frameDelay > frameTime)
