@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <iostream>
 #include "Point2D.h"
+#include <vector>
 class PrimitiveRenderer
 {
 public:
@@ -12,7 +13,7 @@ public:
     SDL_Rect rect;
     //Point2D* dynamicznaKlasa = new Point2D(10, 20);
     void Otwarta(SDL_Renderer* renderer, Point2D nazwa[]);
+    void DrawPolyline(SDL_Renderer* renderer, const std::vector<Point2D>& points, bool closed = false);
 };
 
 #endif
-

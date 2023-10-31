@@ -44,7 +44,18 @@ void Engine::Run()
     int frameTime;
     float old_time = SDL_GetTicks();
     bool isRunning = true;
-    Point2D nazwa[3] = { Point2D(10,15),Point2D(20,20) ,Point2D(200,30) };
+    Point2D nazwa[3] = { Point2D(200,150),Point2D(20,20) ,Point2D(200,30) };
+
+    
+    polylinePoints.push_back(Point2D(100, 100));
+    polylinePoints.push_back(Point2D(200, 200));
+    polylinePoints.push_back(Point2D(300, 100));
+    polylinePoints.push_back(Point2D(400, 200));
+
+    polylineSegments.push_back(LineSegment(Point2D(100, 100), Point2D(200, 200)));
+    polylineSegments.push_back(LineSegment(Point2D(200, 200), Point2D(300, 100)));
+    polylineSegments.push_back(LineSegment(Point2D(300, 100), Point2D(400, 200)));
+    
     while (isRunning)
     {
         // klatki
@@ -61,7 +72,7 @@ void Engine::Run()
         point.zmien_punkt(750, 20);
 
         //test czy dzia³aj¹ ró¿ne k¹ty do zad3 lab2
-        pr1.RysLinie(renderer, 50, 1, 50, 40);
+        pr1.RysLinie(renderer, 50, 1, 50, 47);
 
         //zad5 lab2 - lineSegment
         //rysowanie odcinka przy pomocy Point2D
@@ -90,8 +101,16 @@ void Engine::Run()
         line.Draw(renderer, true);
         /*koniec zad5 lab2 - lineSegment*/
 
-        pr1.Otwarta(renderer, nazwa);
-      
+        // otwarta linia robiona na tablicy - chyba wywalic 
+        //pr1.Otwarta(renderer, nazwa);
+
+        // lab2 zad6
+        //linia ³amana otwarta na podstawie punktów
+        //pr1.DrawPolyline(renderer, polylinePoints, false);
+
+        // linia ³amana zamkniêta na podstawie punktów
+        pr1.DrawPolyline(renderer, polylinePoints, true);
+
         frameTime = SDL_GetTicks() - frameStart;
         if (frameDelay > frameTime)
         {

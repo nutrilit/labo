@@ -24,8 +24,8 @@ void PrimitiveRenderer::RysLinie(SDL_Renderer* renderer, int x0, int y0, int x1,
             y = y0;
             for (x = x0; x != x1; x += tempX)
             { // zast¹piæ warunek fora
-                SDL_Rect rect = { x, y, 10, 10 };
-                SDL_SetRenderDrawColor(renderer, 255, 100, 255, 255);
+                SDL_Rect rect = { x, y, 3, 3 };
+                SDL_SetRenderDrawColor(renderer, 123, 234, 0, 255);
                 SDL_RenderFillRect(renderer, &rect);
                 temp -= dy;
                 if (temp < 0)
@@ -41,8 +41,8 @@ void PrimitiveRenderer::RysLinie(SDL_Renderer* renderer, int x0, int y0, int x1,
             x = x0;
             for (y = y0; y != y1; y += tempY)
             {
-                SDL_Rect rect = { x, y, 10, 10 };
-                SDL_SetRenderDrawColor(renderer, 255, 100, 255, 255);
+                SDL_Rect rect = { x, y, 3, 3 };
+                SDL_SetRenderDrawColor(renderer, 123, 234, 0, 255);
                 SDL_RenderFillRect(renderer, &rect);
                 temp -= dx;
                 if (temp < 0)
@@ -52,16 +52,37 @@ void PrimitiveRenderer::RysLinie(SDL_Renderer* renderer, int x0, int y0, int x1,
                 }
             }
         }
-        SDL_Rect rect = { x1, y1, 10, 10 };
-        SDL_SetRenderDrawColor(renderer, 255, 100, 255, 255);
+        SDL_Rect rect = { x1, y1, 3, 3 };
+        //SDL_SetRenderDrawColor(renderer, 255, 100, 255, 255);
         SDL_RenderFillRect(renderer, &rect);
     
 }
 
 void PrimitiveRenderer::Otwarta(SDL_Renderer* renderer, Point2D nazwa[]) {
-    for (int i = 0; i < sizeof(nazwa)/(sizeof(nazwa[0])); i++) {
-        if (i + 1 <= sizeof(nazwa) / (sizeof(nazwa[0])))
-            RysLinie(renderer, nazwa[i].x, nazwa[i].y, nazwa[i + 1].x, nazwa[i + 1].y);
+    for (int i = 0; i<3; i++) {
+        if (i+1<3)
+            RysLinie(renderer, nazwa[i].GetX(), nazwa[i].GetY(), nazwa[i + 1].GetX(), nazwa[i + 1].GetY());
     }
 
+}
+
+// linia otwarta lub zamknieta wykorzystuje zbiór punktów Point2D
+void PrimitiveRenderer::DrawPolyline(SDL_Renderer* renderer, const std::vector<Point2D>& points, bool closed)
+{
+    if (points.size() < 2) {
+        return;
+    }
+
+    for (size_t i = 1; i < points.size(); ++i) {
+        const Point2D& start = points[i - 1];
+        const Point2D& end = points[i];
+        RysLinie(renderer, start.GetX(), start.GetY(), end.GetX(), end.GetY());
+    }
+
+    if (closed && !points.empty()) {
+        const Point2D& first = points.front();
+        const Point2D& last = points.back();
+        RysLinie(renderer, last.GetX(), last.GetY(), first.GetX(), first.GetY());
+    }
+    
 }

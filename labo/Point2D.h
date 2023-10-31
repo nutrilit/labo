@@ -3,7 +3,7 @@
 #define POINT2D_H
 
 #include <SDL.h>
-#//include "PrimitiveRenderer.h"
+//include #"PrimitiveRenderer.h"
 #include <iostream>
 
 class Point2D

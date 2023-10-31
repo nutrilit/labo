@@ -8,6 +8,7 @@
 #include "PrimitiveRenderer.h"
 #include "LineSegment.h"
 #include <iostream>
+#include <vector>
 
 class Engine
 {
@@ -17,13 +18,15 @@ public:
     ~Engine();
 
 private:
-    PrimitiveRenderer pr1;
+    PrimitiveRenderer pr1,pr2;
     SDL_Window* window;
     SDL_Event event;
     int Width, Height;
     Player p1;
     void MovementHandle();
     SDL_Renderer* renderer;
+    std::vector<Point2D> polylinePoints;
+    std::vector<LineSegment> polylineSegments;
 };
 
 #endif
