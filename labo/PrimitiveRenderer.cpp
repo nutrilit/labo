@@ -105,3 +105,53 @@ void PrimitiveRenderer::DrawPolyline2(SDL_Renderer* renderer, const std::vector<
         RysLinie(renderer, lastSegment.GetEndPoint().GetX(), lastSegment.GetEndPoint().GetY(), firstSegment.GetStartPoint().GetX(), firstSegment.GetStartPoint().GetY(), color);
     }
 }
+
+
+// zad1 lab3 rysowanie okregu
+void PrimitiveRenderer::DrawCircle4Symmetry(SDL_Renderer* renderer, int x0, int y0, int R, SDL_Color color)
+{
+    float alpha;
+    for (alpha = 0; alpha < M_PI / 2; alpha += 0.005) {
+        int x = (x0 + R * cos(alpha));
+        int y = (y0 + R * sin(alpha));
+        int mirroredX = x0 - (x - x0);
+        int mirroredY = y0 - (y - y0);
+        Draw(renderer, { x, y, 1, 1 }, color); // Punkt w pierwszej cwiartce
+        Draw(renderer, { mirroredX, y, 1, 1 }, color); // Punkt w drugiej æwiartce
+        Draw(renderer, { x, mirroredY, 1, 1 }, color); // Punkt w czwartej æwiartce
+        Draw(renderer, { mirroredX, mirroredY, 1, 1 }, color); // Punkt w trzeciej æwiartce
+    }
+}
+
+void PrimitiveRenderer::DrawCircleWithSDL(SDL_Renderer* renderer, int x0, int y0, int R, SDL_Color color)
+{
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+    int r = R;
+    int x = r;
+    int y = 0;
+    int err = 0;
+
+    while (x >= y)
+    {
+        SDL_RenderDrawPoint(renderer, x0 + x, y0 + y);
+        SDL_RenderDrawPoint(renderer, x0 + y, y0 + x);
+        SDL_RenderDrawPoint(renderer, x0 - y, y0 + x);
+        SDL_RenderDrawPoint(renderer, x0 - x, y0 + y);
+        SDL_RenderDrawPoint(renderer, x0 - x, y0 - y);
+        SDL_RenderDrawPoint(renderer, x0 - y, y0 - x);
+        SDL_RenderDrawPoint(renderer, x0 + y, y0 - x);
+        SDL_RenderDrawPoint(renderer, x0 + x, y0 - y);
+
+        if (err <= 0)
+        {
+            y += 1;
+            err += 2 * y + 1;
+        }
+
+        if (err > 0)
+        {
+            x -= 1;
+            err -= 2 * x + 1;
+        }
+    }
+}

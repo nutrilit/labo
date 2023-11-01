@@ -119,6 +119,10 @@ void Engine::Run()
         // linia ³amana zamkniêta na podstawie linii
         pr1.DrawPolyline2(renderer, polylineSegments, true, zolty);
 
+        // rysowanie okregu 4sem
+        pr1.DrawCircle4Symmetry(renderer, 500, 500, 30, zolty);
+        pr1.DrawCircleWithSDL(renderer, 400, 400, 30, czerwony);
+
         frameTime = SDL_GetTicks() - frameStart;
         if (frameDelay > frameTime)
         {

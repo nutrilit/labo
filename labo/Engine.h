@@ -9,7 +9,6 @@
 #include "LineSegment.h"
 #include <iostream>
 #include <vector>
-
 class Engine
 {
 public:
