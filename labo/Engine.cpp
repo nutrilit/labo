@@ -66,7 +66,7 @@ void Engine::Run()
         //poruszanie sie gracza
         MovementHandle();
         // rysowanie gracza
-        pr1.Draw(renderer, p1.rect);
+        pr1.Draw(renderer, p1.rect, czerwony);
         /* koniec gracz*/
         // rysowanie piksela w lewym gornym rogu
         //point.rys_piksel(renderer);
@@ -74,7 +74,7 @@ void Engine::Run()
         point.zmien_punkt(750, 20);
 
         //test czy dzia³aj¹ ró¿ne k¹ty do zad3 lab2
-        pr1.RysLinie(renderer, 50, 1, 50, 47);
+        pr1.RysLinie(renderer, 50, 1, 50, 47, marynarkawojenna);
 
         //zad5 lab2 - lineSegment
         //rysowanie odcinka przy pomocy Point2D
@@ -111,13 +111,13 @@ void Engine::Run()
         //pr1.DrawPolyline(renderer, polylinePoints, false);
 
         // linia ³amana zamkniêta na podstawie punktów
-        pr1.DrawPolyline(renderer, polylinePoints, true);
+        pr1.DrawPolyline(renderer, polylinePoints, true, cyraneczka);
 
         // linia ³amana otwarta na podstawie linii
         //pr1.DrawPolyline2(renderer, polylineSegments, false);
 
         // linia ³amana zamkniêta na podstawie linii
-        pr1.DrawPolyline2(renderer, polylineSegments, true);
+        pr1.DrawPolyline2(renderer, polylineSegments, true, zolty);
 
         frameTime = SDL_GetTicks() - frameStart;
         if (frameDelay > frameTime)
