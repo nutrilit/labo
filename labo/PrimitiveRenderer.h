@@ -18,6 +18,7 @@ public:
     void DrawPolyline2(SDL_Renderer* renderer, const std::vector<LineSegment>& segments, bool closed, SDL_Color color = { 255, 255, 255, 255 });
     void DrawCircle4Symmetry(SDL_Renderer* renderer, int x0, int y0, int R, SDL_Color color = { 255, 255, 255, 255 });
     void DrawCircleWithSDL(SDL_Renderer* renderer, int x0, int y0, int R, SDL_Color color = { 255, 255, 255, 255 });
+    void DrawEllipse(SDL_Renderer* renderer, int x0, int y0, int RX, int RY, SDL_Color color = { 255, 255, 255, 255 });
 };
 
 #endif

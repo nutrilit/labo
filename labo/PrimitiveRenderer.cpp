@@ -155,3 +155,23 @@ void PrimitiveRenderer::DrawCircleWithSDL(SDL_Renderer* renderer, int x0, int y0
         }
     }
 }
+
+void PrimitiveRenderer::DrawEllipse(SDL_Renderer* renderer, int x0, int y0, int RX, int RY, SDL_Color color)
+{
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+
+    double alpha;
+    double step = M_PI / 180; // Krok 1 stopnia
+
+    for (alpha = 0; alpha < M_PI / 2; alpha += step)
+    {
+        int x = (x0 + RX * cos(alpha));
+        int y = (y0 + RY * sin(alpha));
+        int mirroredX = x0 - (x - x0);
+        int mirroredY = y0 - (y - y0);
+        Draw(renderer, { x, y, 1, 1 }, color); // Punkt w pierwszej cwiartce
+        Draw(renderer, { mirroredX, y, 1, 1 }, color); // Punkt w drugiej æwiartce
+        Draw(renderer, { x, mirroredY, 1, 1 }, color); // Punkt w czwartej æwiartce
+        Draw(renderer, { mirroredX, mirroredY, 1, 1 }, color); // Punkt w trzeciej æwiartce
+    }
+}

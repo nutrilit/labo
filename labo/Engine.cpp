@@ -123,6 +123,8 @@ void Engine::Run()
         pr1.DrawCircle4Symmetry(renderer, 500, 500, 30, zolty);
         pr1.DrawCircleWithSDL(renderer, 400, 400, 30, czerwony);
 
+        // rysowanie olipsy 
+        pr1.DrawEllipse(renderer, 500, 300, 30, 10, cyraneczka);
         frameTime = SDL_GetTicks() - frameStart;
         if (frameDelay > frameTime)
         {
