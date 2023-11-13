@@ -82,3 +82,22 @@ void LineSegment::DrawIncremental(SDL_Renderer* renderer) const
         }
     }
 }
+
+bool LineSegment::DoNotIntersect(const LineSegment& other) const
+{
+    const Point2D& p1 = GetStartPoint();
+    const Point2D& q1 = GetEndPoint();
+    const Point2D& p2 = other.GetStartPoint();
+    const Point2D& q2 = other.GetEndPoint();
+
+    if (std::max(p1.GetX(), q1.GetX()) < std::min(p2.GetX(), q2.GetX())) return true;
+    if (std::min(p1.GetX(), q1.GetX()) > std::max(p2.GetX(), q2.GetX())) return true;
+    if (std::max(p1.GetY(), q1.GetY()) < std::min(p2.GetY(), q2.GetY())) return true;
+    if (std::min(p1.GetY(), q1.GetY()) > std::max(p2.GetY(), q2.GetY())) return true;
+
+    std::cerr << "Odcinki siê przecinaj¹!" << std::endl;
+    //exit(1);
+
+    return false; 
+}
+

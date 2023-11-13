@@ -12,6 +12,7 @@ public:
     void SetStartPoint(Point2D new_start);
     void SetEndPoint(Point2D new_end);
     void Draw(SDL_Renderer* renderer, bool incremental = false) const;
+    bool DoNotIntersect(const LineSegment& other) const;
 
 private:
     Point2D start_point;

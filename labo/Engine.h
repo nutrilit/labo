@@ -31,6 +31,8 @@ private:
     SDL_Renderer* renderer;
     std::vector<Point2D> polylinePoints;
     std::vector<LineSegment> polylineSegments;
+    std::vector<Point2D> polygonPoints;
+    std::vector<LineSegment> polygonSegments;
 };
 
 #endif

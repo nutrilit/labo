@@ -123,39 +123,7 @@ void PrimitiveRenderer::DrawCircle4Symmetry(SDL_Renderer* renderer, int x0, int 
     }
 }
 
-void PrimitiveRenderer::DrawCircleWithSDL(SDL_Renderer* renderer, int x0, int y0, int R, SDL_Color color)
-{
-    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-    int r = R;
-    int x = r;
-    int y = 0;
-    int err = 0;
-
-    while (x >= y)
-    {
-        SDL_RenderDrawPoint(renderer, x0 + x, y0 + y);
-        SDL_RenderDrawPoint(renderer, x0 + y, y0 + x);
-        SDL_RenderDrawPoint(renderer, x0 - y, y0 + x);
-        SDL_RenderDrawPoint(renderer, x0 - x, y0 + y);
-        SDL_RenderDrawPoint(renderer, x0 - x, y0 - y);
-        SDL_RenderDrawPoint(renderer, x0 - y, y0 - x);
-        SDL_RenderDrawPoint(renderer, x0 + y, y0 - x);
-        SDL_RenderDrawPoint(renderer, x0 + x, y0 - y);
-
-        if (err <= 0)
-        {
-            y += 1;
-            err += 2 * y + 1;
-        }
-
-        if (err > 0)
-        {
-            x -= 1;
-            err -= 2 * x + 1;
-        }
-    }
-}
-
+// zad2 lab3 rysowanie elipsy
 void PrimitiveRenderer::DrawEllipse(SDL_Renderer* renderer, int x0, int y0, int RX, int RY, SDL_Color color)
 {
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
@@ -174,4 +142,134 @@ void PrimitiveRenderer::DrawEllipse(SDL_Renderer* renderer, int x0, int y0, int 
         Draw(renderer, { x, mirroredY, 1, 1 }, color); // Punkt w czwartej Êwiartce
         Draw(renderer, { mirroredX, mirroredY, 1, 1 }, color); // Punkt w trzeciej Êwiartce
     }
+}
+
+// zad3 lab3 
+
+void PrimitiveRenderer::DrawPolygon(SDL_Renderer* renderer, const std::vector<Point2D>& vertices, SDL_Color color)
+{
+    if (vertices.size() < 3) {
+        return;  // Wielokπt musi mieÊ co najmniej 3 wierzcho≥ki
+    }
+
+
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+
+    for (size_t i = 0; i < vertices.size() - 1; ++i) {
+        const Point2D& start = vertices[i];
+        const Point2D& end = vertices[i + 1];
+        SDL_RenderDrawLine(renderer, start.GetX(), start.GetY(), end.GetX(), end.GetY());
+    }
+
+    // Ostatni odcinek ≥πczy ostatni wierzcho≥ek z pierwszym
+    const Point2D& first = vertices.front();
+    const Point2D& last = vertices.back();
+    SDL_RenderDrawLine(renderer, last.GetX(), last.GetY(), first.GetX(), first.GetY());
+}
+
+void PrimitiveRenderer::DrawPolygon2(SDL_Renderer* renderer, const std::vector<LineSegment>& segments, SDL_Color color)
+{
+    // Sprawdü, czy odcinki przecinajπ siÍ
+    for (size_t i = 0; i < segments.size(); ++i) {
+        for (size_t j = i + 1; j < segments.size(); ++j) {
+            if (segments[i].DoNotIntersect(segments[j])) {
+                return;  // Przerwij rysowanie w przypadku przeciÍcia
+            }
+        }
+    }
+
+    // Narysuj zamkniÍty wielokπt
+    for (const LineSegment& segment : segments) {
+        RysLinie(renderer, segment.GetStartPoint().GetX(), segment.GetStartPoint().GetY(),
+            segment.GetEndPoint().GetX(), segment.GetEndPoint().GetY(), color);
+    }
+
+    // Dodaj ostatni odcinek ≥πczπcy poczπtek z koÒcem
+    const LineSegment& firstSegment = segments.front();
+    const LineSegment& lastSegment = segments.back();
+    RysLinie(renderer, lastSegment.GetEndPoint().GetX(), lastSegment.GetEndPoint().GetY(),
+        firstSegment.GetStartPoint().GetX(), firstSegment.GetStartPoint().GetY(), color);
+}
+
+void PrimitiveRenderer::BorderFill(SDL_Renderer* renderer, int x, int y, SDL_Color boundaryColor, SDL_Color fillColor)
+{
+    // Sprawdü czy punkt (x, y) jest poza granicami
+    if (x < 0 || x >= 800 || y < 0 || y >= 600)
+        return;
+
+    // Sprawdü czy punkt nie jest juø wype≥niony kolorem fillColor
+    SDL_Color currentColor;
+    SDL_GetRenderDrawColor(renderer, &currentColor.r, &currentColor.g, &currentColor.b, &currentColor.a);
+    if (currentColor.r == fillColor.r && currentColor.g == fillColor.g && currentColor.b == fillColor.b) {
+        
+        SDL_SetRenderDrawColor(renderer, fillColor.r, fillColor.g, fillColor.b, fillColor.a);
+        SDL_RenderDrawPoint(renderer, x, y);
+        return;
+    }
+
+    // Sprawdü czy punkt ma kolor boundaryColor
+    Uint8 r, g, b, a;
+    SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
+    if (r != boundaryColor.r || g != boundaryColor.g || b != boundaryColor.b) {
+        SDL_SetRenderDrawColor(renderer, fillColor.r, fillColor.g, fillColor.b, fillColor.a);
+        SDL_RenderDrawPoint(renderer, x, y);
+        return;
+    }
+
+    // Wype≥nij punkt kolorem fillColor
+    SDL_SetRenderDrawColor(renderer, fillColor.r, fillColor.g, fillColor.b, fillColor.a);
+    SDL_RenderDrawPoint(renderer, x, y);
+
+    // Rekurencyjnie wype≥niaj sπsiednie punkty
+    BorderFill(renderer, x + 1, y, boundaryColor, fillColor);
+    BorderFill(renderer, x - 1, y, boundaryColor, fillColor);
+    BorderFill(renderer, x, y + 1, boundaryColor, fillColor);
+    BorderFill(renderer, x, y - 1, boundaryColor, fillColor);
+}
+
+void PrimitiveRenderer::FloodFill(SDL_Renderer* renderer, int x, int y, SDL_Color targetColor, SDL_Color fillColor)
+{
+    // Sprawdü czy punkt (x, y) jest poza granicami
+    if (x < 0 || x >= 800 || y < 0 || y >= 600)
+        return;
+
+    // Sprawdü czy punkt nie jest juø wype≥niony kolorem fillColor
+    SDL_Color currentColor;
+    SDL_GetRenderDrawColor(renderer, &currentColor.r, &currentColor.g, &currentColor.b, &currentColor.a);
+    if (currentColor.r == fillColor.r && currentColor.g == fillColor.g && currentColor.b == fillColor.b)
+        return;
+
+    // Sprawdü czy punkt ma kolor docelowy targetColor
+    Uint8 r, g, b, a;
+    SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
+    if (r != targetColor.r || g != targetColor.g || b != targetColor.b)
+        return;
+
+    // Wype≥nij punkt kolorem fillColor
+    SDL_SetRenderDrawColor(renderer, fillColor.r, fillColor.g, fillColor.b, fillColor.a);
+    SDL_RenderDrawPoint(renderer, x, y);
+
+    // Rekurencyjnie wype≥niaj sπsiednie punkty
+    FloodFill(renderer, x + 1, y, targetColor, fillColor);
+    FloodFill(renderer, x - 1, y, targetColor, fillColor);
+    FloodFill(renderer, x, y + 1, targetColor, fillColor);
+    FloodFill(renderer, x, y - 1, targetColor, fillColor);
+}
+
+void PrimitiveRenderer::wypelnij(SDL_Renderer* renderer,int x,int y)
+{
+    SDL_Color blank = { 0,0,0,0 };
+    SDL_Color fill = { 255,0,255,0 };
+    SDL_Rect rect = { x,y,1,1 };
+    Uint8 r, g, b, a;
+   // SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
+    SDL_Color czerwony = { 255,0,0,255 };
+    //Draw(renderer, rect, czerwony);
+    do {
+        rect.x++;
+        Draw(renderer, rect, czerwony);
+
+        
+        SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
+    } while (r != 0 || g != 0 || b != 0 || a != 255);
 }

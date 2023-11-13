@@ -56,8 +56,15 @@ void Engine::Run()
     polylineSegments.push_back(LineSegment(Point2D(250, 200), Point2D(350, 100)));
     polylineSegments.push_back(LineSegment(Point2D(350, 100), Point2D(450, 200)));
 
+    polygonPoints.push_back(Point2D(300, 600));
+    polygonPoints.push_back(Point2D(200, 400));
+    polygonPoints.push_back(Point2D(200, 300));
+    polygonPoints.push_back(Point2D(300, 600));
 
-    
+    polygonSegments.push_back(LineSegment(Point2D(450, 350), Point2D(500, 300)));
+    polygonSegments.push_back(LineSegment(Point2D(500, 280), Point2D(450, 260)));
+    polygonSegments.push_back(LineSegment(Point2D(370, 420), Point2D(400, 350)));
+
     while (isRunning)
     {
         // klatki
@@ -121,10 +128,19 @@ void Engine::Run()
 
         // rysowanie okregu 4sem
         pr1.DrawCircle4Symmetry(renderer, 500, 500, 30, zolty);
-        pr1.DrawCircleWithSDL(renderer, 400, 400, 30, czerwony);
 
-        // rysowanie olipsy 
-        pr1.DrawEllipse(renderer, 500, 300, 30, 10, cyraneczka);
+        // rysowanie elipsy zad2 lab2
+        pr1.DrawEllipse(renderer, 600, 500, 30, 10, cyraneczka);
+
+        // rysowanie wielok¹ta zad3 lab3
+        pr1.DrawPolygon(renderer, polygonPoints, czerwony);
+
+        pr1.DrawPolygon2(renderer, polygonSegments, zolty);
+
+
+        // zad5 lab3
+       // pr1.wypelnij(renderer, 600, 501);
+        pr1.BorderFill(renderer, 600, 501, cyraneczka, czerwony);
         frameTime = SDL_GetTicks() - frameStart;
         if (frameDelay > frameTime)
         {
