@@ -138,9 +138,22 @@ void Engine::Run()
         pr1.DrawPolygon2(renderer, polygonSegments, zolty);
 
 
-        // zad5 lab3
-       // pr1.wypelnij(renderer, 600, 501);
-        pr1.BorderFill(renderer, 600, 501, cyraneczka, czerwony);
+        // zad5 lab3 
+        SDL_Color black = { 0,0,0,255 };
+        SDL_Color fill = { 0,0,255,255 };
+        SDL_Rect tmp = { 10,10,50,50 };
+        SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+        SDL_RenderFillRect(renderer, &tmp);
+        SDL_Color currentColor;
+        SDL_Rect pixelRect = { 15,15, 1, 1 };
+        SDL_RenderReadPixels(renderer, &pixelRect, SDL_PIXELFORMAT_RGBA8888, &currentColor, sizeof(Uint32));
+        std::cout << (int)currentColor.r<<std::endl << (int)currentColor.g << std::endl << (int)currentColor.b << std::endl << (int)currentColor.a<<std::endl;
+        
+        //algorytm floodFill
+        //pr1.floodFill(renderer, 15, 15, fill, czerwony); //kwadrat
+        // pr1.floodFill(renderer, 605, 505, black, czerwony); //elipsa
+       // pr1.floodFill(renderer, 505, 505, black, czerwony); //ko³o
+
         frameTime = SDL_GetTicks() - frameStart;
         if (frameDelay > frameTime)
         {
