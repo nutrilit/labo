@@ -1,17 +1,1 @@
-﻿  PrimitiveRenderer.cpp
-C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(16,24): warning C4244: "=": konwersja z "int" do "float", możliwa utrata danych
-C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(17,24): warning C4244: "=": konwersja z "int" do "float", możliwa utrata danych
-C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(23,22): warning C4244: "inicjowanie": konwersja z "float" do "int", możliwa utrata danych
-C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(30,25): warning C4244: "-=": konwersja z "float" do "int", możliwa utrata danych
-C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(34,29): warning C4244: "+=": konwersja z "float" do "int", możliwa utrata danych
-C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(40,22): warning C4244: "inicjowanie": konwersja z "float" do "int", możliwa utrata danych
-C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(47,25): warning C4244: "-=": konwersja z "float" do "int", możliwa utrata danych
-C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(51,29): warning C4244: "+=": konwersja z "float" do "int", możliwa utrata danych
-C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(15,23): warning C4101: "m": lokalna zmienna, do której nie istnieje odwołanie
-C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(106,53): warning C4305: "+=": obcięcie z "double" do "float"
-C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(107,15): warning C4244: "inicjowanie": konwersja z "float" do "int", możliwa utrata danych
-C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(108,15): warning C4244: "inicjowanie": konwersja z "float" do "int", możliwa utrata danych
-C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(128,15): warning C4244: "inicjowanie": konwersja z "double" do "int", możliwa utrata danych
-C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(129,15): warning C4244: "inicjowanie": konwersja z "double" do "int", możliwa utrata danych
-  LINK : nie znaleziono elementu C:\Users\um\Desktop\lab_grafika\labo\x64\Debug\labo.exe ani nie został on skompilowany podczas ostatniego konsolidowania przyrostowego; zostanie wykonana pełna konsolidacja
-  labo.vcxproj -> C:\Users\um\Desktop\lab_grafika\labo\x64\Debug\labo.exe
+﻿  labo.vcxproj -> C:\Users\jorda\source\repos\labo\x64\Debug\labo.exe
