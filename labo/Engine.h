@@ -9,6 +9,7 @@
 #include "LineSegment.h"
 #include <iostream>
 #include <vector>
+#include "GameObject.cpp"
 class Engine
 {
 public:
