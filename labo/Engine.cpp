@@ -138,22 +138,8 @@ void Engine::Run()
         pr1.DrawPolygon2(renderer, polygonSegments, zolty);
 
 
-        // zad5 lab3 
-        SDL_Color black = { 0,0,0,255 };
-        SDL_Color fill = { 0,0,255,255 };
-        SDL_Rect tmp = { 10,10,50,50 };
-        SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-        SDL_RenderFillRect(renderer, &tmp);
-        SDL_Color currentColor;
-        SDL_Rect pixelRect = { 15,15, 1, 1 };
-        SDL_RenderReadPixels(renderer, &pixelRect, SDL_PIXELFORMAT_RGBA8888, &currentColor, sizeof(Uint32));
-        std::cout << (int)currentColor.r<<std::endl << (int)currentColor.g << std::endl << (int)currentColor.b << std::endl << (int)currentColor.a<<std::endl;
-        
-        //algorytm floodFill
-        //pr1.floodFill(renderer, 15, 15, fill, czerwony); //kwadrat
-        // pr1.floodFill(renderer, 605, 505, black, czerwony); //elipsa
-       // pr1.floodFill(renderer, 505, 505, black, czerwony); //ko³o
-
+        // zad5 lab3
+        //pr1.floodFill(renderer, 601, 501, czarny, zolty);
         frameTime = SDL_GetTicks() - frameStart;
         if (frameDelay > frameTime)
         {
@@ -177,13 +163,17 @@ void Engine::Run()
 
 void Engine::MovementHandle()
 {
-    if (event.type == SDL_KEYDOWN)
-    {
-        if (SDLK_LEFT == event.key.keysym.sym)
+        const Uint8* state = SDL_GetKeyboardState(NULL);
+
+        if (state[SDL_SCANCODE_LEFT])
+        {
             p1.MoveLeft();
-        if (SDLK_RIGHT == event.key.keysym.sym)
+        }
+
+        if (state[SDL_SCANCODE_RIGHT])
+        {
             p1.MoveRight();
-    }
+        }
 }
 
 Engine::~Engine()

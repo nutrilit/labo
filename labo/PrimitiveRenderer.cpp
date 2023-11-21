@@ -1,5 +1,4 @@
 #include "PrimitiveRenderer.h"
-#include <stack>
 
 //zad2 lab2
 void PrimitiveRenderer::Draw(SDL_Renderer* renderer, SDL_Rect rect1, SDL_Color color)
@@ -58,14 +57,6 @@ void PrimitiveRenderer::RysLinie(SDL_Renderer* renderer, int x0, int y0, int x1,
         SDL_RenderFillRect(renderer, &rect);
     
 }
-/*
-void PrimitiveRenderer::Otwarta(SDL_Renderer* renderer, Point2D nazwa[]) {
-    for (int i = 0; i<3; i++) {
-        if (i+1<3)
-            RysLinie(renderer, nazwa[i].GetX(), nazwa[i].GetY(), nazwa[i + 1].GetX(), nazwa[i + 1].GetY());
-    }
-
-}*/
 
 // linia otwarta lub zamknieta wykorzystuje zbiÛr punktÛw Point2D
 void PrimitiveRenderer::DrawPolyline(SDL_Renderer* renderer, const std::vector<Point2D>& points, bool closed, SDL_Color color)
@@ -192,148 +183,6 @@ void PrimitiveRenderer::DrawPolygon2(SDL_Renderer* renderer, const std::vector<L
         firstSegment.GetStartPoint().GetX(), firstSegment.GetStartPoint().GetY(), color);
 }
 
-void PrimitiveRenderer::BorderFill(SDL_Renderer* renderer, int x, int y, SDL_Color boundaryColor, SDL_Color fillColor)
-{
-    // Sprawdü czy punkt (x, y) jest poza granicami
-    if (x < 0 || x >= 800 || y < 0 || y >= 600)
-        return;
-
-    // Sprawdü czy punkt nie jest juø wype≥niony kolorem fillColor
-    SDL_Color currentColor;
-    SDL_GetRenderDrawColor(renderer, &currentColor.r, &currentColor.g, &currentColor.b, &currentColor.a);
-    if (currentColor.r == fillColor.r && currentColor.g == fillColor.g && currentColor.b == fillColor.b) {
-        
-        SDL_SetRenderDrawColor(renderer, fillColor.r, fillColor.g, fillColor.b, fillColor.a);
-        SDL_RenderDrawPoint(renderer, x, y);
-        return;
-    }
-
-    // Sprawdü czy punkt ma kolor boundaryColor
-    Uint8 r, g, b, a;
-    SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
-    if (r != boundaryColor.r || g != boundaryColor.g || b != boundaryColor.b) {
-        SDL_SetRenderDrawColor(renderer, fillColor.r, fillColor.g, fillColor.b, fillColor.a);
-        SDL_RenderDrawPoint(renderer, x, y);
-        return;
-    }
-
-    // Wype≥nij punkt kolorem fillColor
-    SDL_SetRenderDrawColor(renderer, fillColor.r, fillColor.g, fillColor.b, fillColor.a);
-    SDL_RenderDrawPoint(renderer, x, y);
-
-    // Rekurencyjnie wype≥niaj sπsiednie punkty
-    BorderFill(renderer, x + 1, y, boundaryColor, fillColor);
-    BorderFill(renderer, x - 1, y, boundaryColor, fillColor);
-    BorderFill(renderer, x, y + 1, boundaryColor, fillColor);
-    BorderFill(renderer, x, y - 1, boundaryColor, fillColor);
-}
-
-void PrimitiveRenderer::FloodFill(SDL_Renderer* renderer, int x, int y, SDL_Color targetColor, SDL_Color fillColor)
-{
-    // Sprawdü czy punkt (x, y) jest poza granicami
-    if (x < 0 || x >= 800 || y < 0 || y >= 600)
-        return;
-
-    // Sprawdü czy punkt nie jest juø wype≥niony kolorem fillColor
-    SDL_Color currentColor;
-    SDL_GetRenderDrawColor(renderer, &currentColor.r, &currentColor.g, &currentColor.b, &currentColor.a);
-    if (currentColor.r == fillColor.r && currentColor.g == fillColor.g && currentColor.b == fillColor.b)
-        return;
-
-    // Sprawdü czy punkt ma kolor docelowy targetColor
-    Uint8 r, g, b, a;
-    SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
-    if (r != targetColor.r || g != targetColor.g || b != targetColor.b)
-        return;
-
-    // Wype≥nij punkt kolorem fillColor
-    SDL_SetRenderDrawColor(renderer, fillColor.r, fillColor.g, fillColor.b, fillColor.a);
-    SDL_RenderDrawPoint(renderer, x, y);
-
-    // Rekurencyjnie wype≥niaj sπsiednie punkty
-    FloodFill(renderer, x + 1, y, targetColor, fillColor);
-    FloodFill(renderer, x - 1, y, targetColor, fillColor);
-    FloodFill(renderer, x, y + 1, targetColor, fillColor);
-    FloodFill(renderer, x, y - 1, targetColor, fillColor);
-}
-SDL_Color getPixelColor(SDL_Renderer* renderer, int pixel_X, int pixel_Y,SDL_Color &c) {
-    SDL_Color pixelColor;
-    SDL_Surface* getPixel_Surface = SDL_CreateRGBSurface(0, 800, 600, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
-    SDL_RenderReadPixels(renderer, NULL, SDL_PIXELFORMAT_ARGB8888, getPixel_Surface->pixels, getPixel_Surface->pitch);
-    
-    const Uint8 getPixel_bpp = getPixel_Surface->format->BytesPerPixel;
-
-    Uint16* pPixel = (Uint16*)getPixel_Surface->pixels + pixel_Y * getPixel_Surface->pitch + pixel_X * getPixel_bpp;
-
-    Uint32 pixelData;
-
-    switch (getPixel_bpp) {
-    case 1:
-        pixelData = *pPixel;
-        break;
-    case 2:
-        pixelData = *(Uint16*)pPixel;
-        break;
-    case 3:
-        if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
-            pixelData = pPixel[0] << 16 | pPixel[1] << 8 | pPixel[2];
-        else
-            pixelData = pPixel[0] | pPixel[1] << 8 | pPixel[2] << 16;
-        break;
-    case 4:
-        pixelData = *(Uint32*)pPixel;
-        break;
-    }
-
-    SDL_GetRGBA(pixelData, getPixel_Surface->format, &pixelColor.r, &pixelColor.g, &pixelColor.b, &pixelColor.a);
-    SDL_Color tmp = { pixelColor.r ,pixelColor.g,pixelColor.b,pixelColor.a};
-    c = tmp;
-    return pixelColor;
-}
-void PrimitiveRenderer::wypelnij(SDL_Renderer* renderer,int x,int y)
-{
-    SDL_Color blank = { 0,0,0,0 };
-    SDL_Color czarny = { 0,0,0,255 };
-    SDL_Color fill = { 255,0,255,0 };
-    SDL_Rect rect = { x,y,1,1 };
-    Uint8 r, g, b, a;
-    int i = 0;
-   // SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
-    SDL_Color czerwony = { 255,0,0,255 };
-    SDL_Color test = { 0,0,255,255 };
-    //Draw(renderer, rect, czerwony);
-    SDL_SetRenderDrawColor(renderer, 201, 35, 250 ,25);
-    SDL_Rect rect1 = { x,y,1,1 };
-    getPixelColor(renderer, x, y, blank);
-    //SDL_RenderFillRect(renderer, &rect1);
-    int tmpx = x, tmpy = y;
-
-    while (blank.r == 0 && blank.g == 0 && blank.b == 0 && blank.a == 255)//(i < 5);//(r != 0 || g != 0 || b != 0 || a != 255);*/
-    {
-            Draw(renderer, rect, czerwony);
-            //SDL_RenderDrawPoint(renderer, tmpx, tmpy);
-            rect.x++;
-            tmpx++;
-            getPixelColor(renderer, tmpx, tmpy, blank);
-            std::cout << (int)blank.r << std::endl << (int)blank.g << std::endl << (int)blank.r << std::endl << (int)blank.a << std::endl;
-            // SDL_RenderReadPixels(renderer,&rect1,);
-            i++;
-            if (blank.r != 0 || blank.g != 0 || blank.b != 0 || blank.a != 255)
-            {
-                rect.x = x;
-                tmpy++;
-                getPixelColor(renderer, tmpx, tmpy, blank);
-                break;
-            }
-            // SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
-             //getPixelColor(renderer, x, y, blank);
-        
-    }
-}
-
-bool PrimitiveRenderer::isColorEqual(SDL_Color c1,  SDL_Color c2) {
-    return c1.r == c2.r && c1.g == c2.g && c1.b == c2.b && c1.a == c2.a;
-}
 
 void PrimitiveRenderer::floodFill(SDL_Renderer* renderer, int x, int y, SDL_Color targetColor, SDL_Color fillColor) {
     std::stack<std::pair<int, int>> pixelsToCheck;
@@ -357,20 +206,22 @@ void PrimitiveRenderer::floodFill(SDL_Renderer* renderer, int x, int y, SDL_Colo
         SDL_RenderReadPixels(renderer, &pixelRect, SDL_PIXELFORMAT_RGBA8888, &currentColor, sizeof(Uint32));
         //std::cout << (int)currentColor.r << (int)currentColor.g << (int)currentColor.b << (int)currentColor.a;
         // Sprawdü, czy aktualny piksel ma docelowy kolor
-        
-        if (currentColor.a == targetColor.r && currentColor.b == targetColor.g &&
-            currentColor.g == targetColor.b && currentColor.r == targetColor.a) {
+
+        if (currentColor.a == 0 && currentColor.b == 0 &&
+            currentColor.g == 0 && currentColor.r == 255) {
             // Ustaw kolor wype≥nienia na pikselu
             SDL_SetRenderDrawColor(renderer, fillColor.r, fillColor.g, fillColor.b, fillColor.a);
             //SDL_RenderDrawPoint(renderer, px, py);
             SDL_Rect r1 = { px,py,1,1 };
-            SDL_RenderFillRect(renderer,&r1);
+            SDL_RenderFillRect(renderer, &r1);
 
             // Dodaj sπsiednie piksele do sprawdzenia
             pixelsToCheck.push(std::make_pair(px + 1, py));
             pixelsToCheck.push(std::make_pair(px - 1, py));
             pixelsToCheck.push(std::make_pair(px, py + 1));
             pixelsToCheck.push(std::make_pair(px, py - 1));
+
         }
     }
 }
+
