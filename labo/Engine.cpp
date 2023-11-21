@@ -67,6 +67,7 @@ void Engine::Run()
 
     while (isRunning)
     {
+        //cos tam cos tam
         // klatki
         frameStart = SDL_GetTicks();
         /*gracz*/

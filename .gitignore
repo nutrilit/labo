@@ -361,3 +361,13 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/labo/x64/Debug/Player.obj
+/labo/x64/Debug/LineSegment.obj
+/labo/x64/Debug/labo.exe.recipe
+/labo/x64/Debug/labo.tlog/labo.lastbuildstate
+/labo/x64/Debug/Point2D.obj
+/.gitignore
+/labo/labo.vcxproj
+/.gitignore
+/.gitignore
+/labo/x64/Debug/labo.tlog/CL.read.1.tlog
