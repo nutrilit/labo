@@ -139,8 +139,7 @@ void Engine::Run()
 
 
         // zad5 lab3
-       // pr1.wypelnij(renderer, 600, 501);
-        pr1.BorderFill(renderer, 600, 501, cyraneczka, czerwony);
+        //pr1.floodFill(renderer, 601, 501, czarny, zolty);
         frameTime = SDL_GetTicks() - frameStart;
         if (frameDelay > frameTime)
         {
@@ -164,13 +163,17 @@ void Engine::Run()
 
 void Engine::MovementHandle()
 {
-    if (event.type == SDL_KEYDOWN)
-    {
-        if (SDLK_LEFT == event.key.keysym.sym)
+        const Uint8* state = SDL_GetKeyboardState(NULL);
+
+        if (state[SDL_SCANCODE_LEFT])
+        {
             p1.MoveLeft();
-        if (SDLK_RIGHT == event.key.keysym.sym)
+        }
+
+        if (state[SDL_SCANCODE_RIGHT])
+        {
             p1.MoveRight();
-    }
+        }
 }
 
 Engine::~Engine()
