@@ -23,6 +23,7 @@ private:
     SDL_Color cyraneczka = { 0,128,128,255 };
     SDL_Color zolty = { 255,255,0,255 };
     SDL_Color marynarkawojenna = { 0,0,128, 255 };
+    SDL_Color czarny = { 0,0,0, 255 };
     SDL_Window* window;
     SDL_Event event;
     int Width, Height;
