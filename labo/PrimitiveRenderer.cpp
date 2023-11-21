@@ -220,6 +220,7 @@ void PrimitiveRenderer::floodFill(SDL_Renderer* renderer, int x, int y, SDL_Colo
             pixelsToCheck.push(std::make_pair(px - 1, py));
             pixelsToCheck.push(std::make_pair(px, py + 1));
             pixelsToCheck.push(std::make_pair(px, py - 1));
+
         }
     }
 }
