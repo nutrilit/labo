@@ -1,6 +1,4 @@
-﻿  Engine.cpp
-C:\Users\um\Desktop\lab_grafika\labo\labo\Engine.cpp(45,20): warning C4244: "inicjowanie": konwersja z "Uint32" do "float", możliwa utrata danych
-  PrimitiveRenderer.cpp
+﻿  PrimitiveRenderer.cpp
 C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(16,24): warning C4244: "=": konwersja z "int" do "float", możliwa utrata danych
 C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(17,24): warning C4244: "=": konwersja z "int" do "float", możliwa utrata danych
 C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(23,22): warning C4244: "inicjowanie": konwersja z "float" do "int", możliwa utrata danych
@@ -15,6 +13,5 @@ C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(107,15): warning
 C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(108,15): warning C4244: "inicjowanie": konwersja z "float" do "int", możliwa utrata danych
 C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(128,15): warning C4244: "inicjowanie": konwersja z "double" do "int", możliwa utrata danych
 C:\Users\um\Desktop\lab_grafika\labo\labo\PrimitiveRenderer.cpp(129,15): warning C4244: "inicjowanie": konwersja z "double" do "int", możliwa utrata danych
-  maincpp.cpp
-  Generowanie kodu...
+  LINK : nie znaleziono elementu C:\Users\um\Desktop\lab_grafika\labo\x64\Debug\labo.exe ani nie został on skompilowany podczas ostatniego konsolidowania przyrostowego; zostanie wykonana pełna konsolidacja
   labo.vcxproj -> C:\Users\um\Desktop\lab_grafika\labo\x64\Debug\labo.exe
